@@ -1,4 +1,3 @@
-#! python3
 # Econnect.py - 交换机巡检(ssh)&备份
 # 关于netmiko模块ssh交换机遇到more的问题：https://blog.csdn.net/weixin_34217711/article/details/91615805
 # 关于tftp的参考：https://stackoverflow.com/questions/57109992/how-to-stop-tftp-server-using-tftpy-on-python
@@ -6,7 +5,7 @@
 print('by MLLR')
 from netmiko import ConnectHandler
 from re import search, findall, S
-from time import sleep
+from time import sleep, strftime, localtime
 from sys import exit
 from os import system, popen, makedirs
 from os.path import exists
@@ -62,7 +61,7 @@ def choice_list(switch_list):
     # 从1开始逐行打印
     for i in range(1, len(switch_list)):
         print(i, '   %s %s %s' % (
-        switch_list[i][0], switch_list[i][1], switch_list[i][2][:4] + '*' * len(switch_list[i][2][4:])))
+            switch_list[i][0], switch_list[i][1], switch_list[i][2][:4] + '*' * len(switch_list[i][2][4:])))
     # 用于循环数字，w用于循环
     loop_choice_num = 1
     while loop_choice_num:
@@ -210,20 +209,25 @@ def tftp_server():
         search_69 = findall(r'UDP .*?:69.*?(\d+)', try_shutdown_69, S)
         if len(search_69):
             print(popen('taskkill /f /pid %s' % search_69[0]).read())
+    time_folor = strftime('%Y%m%d%H', localtime())
     # 存放路劲
-    folor = './tftp_box'
+    folor = './tftp_box/' + time_folor
+    # 判断文件是否存在，不存在则创建
+    if not exists(folor):
+        makedirs(folor)
     # 获取ip
     tftp_ip = get_host_ip()
     # 开始调用TFTP监听69端口
     try:
         print('请允许防火墙通过，否则将不能使用备份功能')
         start_tftp_process(get_host_ip(), folor, 1)
-    except:
+    except Exception as e:
+        print(e)
         print('错误！69端口被占用，自动关闭失败如需解决请参考：\nhttps://jingyan.baidu.com/article/fb48e8be97ddc92e622e14f3.html')
         system('pause')
         exit(1)
     print('正在监听%s:69\n' % tftp_ip)
-    return tftp_ip
+    return tftp_ip, time_folor
 
 
 def Econ_backup(net_connect, sshconfirm, tftp_ip):
@@ -269,6 +273,8 @@ def main():
                     continue
                 Econ_inspection(net_connect, sshconfirm)
         elif run_num == 2:
+            # 失败次数
+            error_time = 0
             # 选择要执行的范围
             Switch_list_choice = choice_list(Switch_list)
             # 判断文件是否存在，不存在则创建
@@ -276,7 +282,7 @@ def main():
                 print('tftp_box文件夹创建中...')
                 makedirs('tftp_box')
             # 调用tftp服务
-            tftp_ip = tftp_server()
+            tftp_ip, time_folor = tftp_server()
             for i in Switch_list_choice:
                 # 去掉其中的空格以免账号密码错误
                 for n in range(len(i)):
@@ -284,9 +290,12 @@ def main():
                 net_connect, sshconfirm = Econ_connect(i[0], i[1], i[2], i[3])
                 if net_connect == 0:
                     print('\n由于连接%s失败，正在跳转到下一台设备中..\n' % i[1])
+                    error_time += 1
                     sleep(0.3)
                     continue
                 Econ_backup(net_connect, sshconfirm, tftp_ip)
+            # 调用命令行打开tftp_box的文件夹
+            system('start tftp_box\\' + time_folor)
             print('正在关闭tftp服务器....')
             try:
                 stop_tftp_process()
@@ -294,7 +303,7 @@ def main():
                 print('关闭失败！为了避免不必要的错误正在关闭中...')
                 sleep(1.5)
                 exit(1)
-            print('关闭成功！')
+            print('关闭成功！本次失败备份%s个' % error_time)
         elif run_num == 3:
             main_loop_num = 0
     print('退出中..')
