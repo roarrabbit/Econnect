@@ -28,8 +28,7 @@ Econnect由python制作而成，.exe文件为打包好的脚本，无需安装�
 *  Econnect 1.1
 
   * 如上所示
-
-* Econnect 1.1 iso+text文件备份
+  * Econnect 1.1 iso+text文件备份
 
 * Econnect 1.2 bate
 
