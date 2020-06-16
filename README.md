@@ -17,11 +17,21 @@ Econnect由python制作而成，.exe文件为打包好的脚本，无需安装�
   * 开启tftp服务前会检测本地是否有程序占用69端口，若占用则会kill对应进程
   * 备份命令：copy flash:config.text tftp://**IP**//**路径**.text
 * 巡检
-  * 在1.2测试版本中有导出excel的想法，只适用于多设备人员
+  * 在1.2版本中有导出excel的想法
   * 巡检命令如下：
     * show int status
     * show memory
     * show cpu
+* 支持
+  * 我只测试了如下设备
+    * 锐捷
+      * S2628
+      * S2652
+      * S3760
+      * S5750
+    * 华为
+      * S5700
+  * 目前其中一台锐捷的S3760不能进入特权模式
 
 # 版本
 
@@ -29,17 +39,15 @@ Econnect由python制作而成，.exe文件为打包好的脚本，无需安装�
 
   * 如上所示
   * Econnect 1.1 iso+text文件备份
-
-* Econnect 1.2 bate
-
-  这个测试版本目前先不打包了...
+* Econnect 1.2
 
   * Econnect.py 新增内容
-    * 巡检完毕会自动导出excel报告
+  * 巡检完毕会自动导出excel报告
     * 速度加快
     * 文件都塞box里
-  * Econnect_直出进度条版.py
-    * 上面基础上添加了进度条
+*  Econnect 1.3 bate
+   * Econnect_直出进度条版.py
+     * 上面基础上添加了进度条
 
 # 使用流程
 
