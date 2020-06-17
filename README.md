@@ -75,22 +75,20 @@ Econnect由python制作而成，.exe文件为打包好的脚本，无需安装�
   1. 如遇防火墙请允许通过，因为tftp服务器需要监听69端口
 
   2. 请右键管理员运行（这个问题大多数出现在win8）
-
 * 若端口关闭失败请参考
 
-  https://jingyan.baidu.com/article/fb48e8be97ddc92e622e14f3.html
-
+  * https://jingyan.baidu.com/article/fb48e8be97ddc92e622e14f3.html
 * 关于netmiko模块ssh交换机遇到more的问题：
 
-  https://blog.csdn.net/weixin_34217711/article/details/91615805
-
+  * https://blog.csdn.net/weixin_34217711/article/details/91615805
 * 关于tftp集成的参考
 
-  https://stackoverflow.com/questions/57109992/how-to-stop-tftp-server-using-tftpy-on-python
-
+  * https://stackoverflow.com/questions/57109992/how-to-stop-tftp-server-using-tftpy-on-python
 * 打包exe使用的命令：
 
-   pyinstaller  -F -i ./network.ico  Econnect.py
+   * pyinstaller  -F -i ./network.ico  Econnect.py
+* 备份失败没有文件？
+   * 打开控制面板：`控制面板\系统和安全\Windows Defender 防火墙\允许的应用`允许`Econnect`的专用或公用通过
 
 -------
 # Telnet 版本
