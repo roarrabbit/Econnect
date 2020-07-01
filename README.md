@@ -1,6 +1,6 @@
 # 下载
 
-具体文件可在[releases](https://github.com/MLLR-L/Econnect/releases)中下载
+具体文件可在[releases](https://github.com/MLLR-L/Econnect/releases)中下载或gitee中[下载](https://gitee.com/bittrabbit/Emotion)
 
 
 # 特色
