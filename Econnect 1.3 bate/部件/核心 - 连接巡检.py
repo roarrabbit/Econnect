@@ -32,7 +32,7 @@ def Econ_inspection(ip,user,secret,pwd):
         output = net_connect.send_command_timing(' ',strip_prompt=False,strip_command=False,normalize=False)
         # 将空格获取的内容添加到
         output_del += output
-    # 去掉末尾的24B-2-S2652-55#
+    # 去掉末尾的#
     output_del = output_del[:output_del.rfind('\n%s#'%(sshconfirm))]
     Econ_list.append(output_del)
     # 执行show memory
