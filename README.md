@@ -1,3 +1,7 @@
+# 更新终止
+
+由于个人问题，除非bug发生了或者是新的想法冒出来了，项目就暂时搁置于此了。Econnect已经更新到了1.3的版本了，在目前来说算也是能用的版本了，最后这里感谢下学校NIC。
+
 # 下载
 
 具体文件可在[releases](https://github.com/MLLR-L/Econnect/releases)中下载或gitee中[下载](https://gitee.com/bittrabbit/Emotion)
